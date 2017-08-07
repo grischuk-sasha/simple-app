@@ -1,0 +1,7 @@
+home:
+    path:  /
+    defaults:  { _controller: src\controllers\web\HomeController::actionIndex }
+
+api_home:
+    path:  /api
+    defaults:  { _controller: src\controllers\api\HomeController::actionIndex }

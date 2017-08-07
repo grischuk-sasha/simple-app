@@ -1,0 +1,44 @@
+parameters:
+    charset: UTF-8
+
+services:
+    route_loader:
+        class: Symfony\Component\Routing\Loader\YamlFileLoader
+        arguments: ['@file_locator']
+    route.collection:
+        class: src\components\http\RouteCollection
+        calls:
+            - [loadCollection, ["@route_loader"]]
+    context:
+        class: Symfony\Component\Routing\RequestContext
+    stack:
+        class: Symfony\Component\HttpFoundation\RequestStack
+    matcher:
+        class: Symfony\Component\Routing\Matcher\UrlMatcher
+        arguments: ['@route.collection', '@context']
+    listener.router:
+        class: Symfony\Component\HttpKernel\EventListener\RouterListener
+        arguments: ['@matcher', '@stack']
+    listener.response:
+        class: Symfony\Component\HttpKernel\EventListener\ResponseListener
+        arguments: ['%charset%']
+    listener.string_response:
+        class: src\components\subscriber\StringResponse
+    listener.exception:
+        class: src\components\subscriber\Exception
+    listener.request:
+        class: src\components\subscriber\Request
+    resolver:
+        class: src\components\http\ControllerResolver
+        arguments: ['@service_container']
+    dispatcher:
+        class: Symfony\Component\EventDispatcher\EventDispatcher
+        calls:
+            - [addSubscriber, ["@listener.router"]]
+            - [addSubscriber, ["@listener.response"]]
+            - [addSubscriber, ["@listener.request"]]
+            - [addSubscriber, ["@listener.string_response"]]
+            - [addSubscriber, ["@listener.exception"]]
+    kernel:
+        class: src\components\http\Kernel
+        arguments: ['@dispatcher', '@resolver']

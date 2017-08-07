@@ -1,0 +1,6 @@
+.idea
+.sass-cache
+node_modules
+/composer.lock
+vendor
+/src/configs/db-local.php

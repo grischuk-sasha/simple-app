@@ -1,0 +1,13 @@
+{
+  "name": "simple-app",
+  "version": "0.0.1",
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-contrib-clean": "^1.0.0",
+    "grunt-contrib-sass": "^1.0.0",
+    "grunt-contrib-watch": "^1.0.0",
+    "load-grunt-config": "^0.19.2",
+    "bootstrap-sass": "^3.3.6",
+    "path": "*"
+  }
+}

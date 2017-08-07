@@ -1,0 +1,9 @@
+default:
+    - 'clean:webCss'
+    - 'clean:webJs'
+    - 'sass:dev'
+    - 'watch'
+prod:
+    - 'clean:webCss'
+    - 'clean:webJs'
+    - 'sass:prod'
